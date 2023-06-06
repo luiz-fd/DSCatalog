@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.luizfd.dscatalog.dto.CategoryDTO;
 import com.luizfd.dscatalog.entities.Category;
 import com.luizfd.dscatalog.repositories.CategoryRepository;
+import com.luizfd.dscatalog.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -27,7 +28,8 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findById(Long id) {
 		Optional<Category> resultado = categoryRepository.findById(id);
-		return new CategoryDTO( resultado.get());		
+		Category entity = resultado.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		return new CategoryDTO( entity);		
 	}
 
 }

@@ -29,7 +29,7 @@ public class CategoryResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity< CategoryDTO> findById(@PathVariable Long id) {
 		CategoryDTO dto = categoryService.findById(id);
-		return ResponseEntity.ok(dto);
+		return ResponseEntity.ok().body(dto);
 	}
 	
 
