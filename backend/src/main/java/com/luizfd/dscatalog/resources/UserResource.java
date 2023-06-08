@@ -22,6 +22,8 @@ import com.luizfd.dscatalog.dto.UserInsertDTO;
 import com.luizfd.dscatalog.dto.UserUpdateDTO;
 import com.luizfd.dscatalog.services.UserService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping(value = "/users")
@@ -46,7 +48,7 @@ public class UserResource {
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping
-	public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto) {
+	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
 		UserDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newDto.getId()).toUri();
@@ -55,7 +57,7 @@ public class UserResource {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
+	public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid  @RequestBody UserUpdateDTO dto) {
 		UserDTO newDto = service.update(id, dto);
 		return ResponseEntity.ok().body(newDto);
 	}
