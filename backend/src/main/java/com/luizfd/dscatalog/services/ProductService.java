@@ -1,5 +1,7 @@
 package com.luizfd.dscatalog.services;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.luizfd.dscatalog.dto.CategoryDTO;
 import com.luizfd.dscatalog.dto.ProductDTO;
 import com.luizfd.dscatalog.entities.Category;
 import com.luizfd.dscatalog.entities.Product;
+import com.luizfd.dscatalog.projections.ProductProjection;
 import com.luizfd.dscatalog.repositories.CategoryRepository;
 import com.luizfd.dscatalog.repositories.ProductRepository;
 import com.luizfd.dscatalog.services.exceptions.DatabaseException;
@@ -31,9 +34,14 @@ public class ProductService {
 	private CategoryRepository categoryRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAllPaged(Pageable pageable) {
-		Page<Product> list = repository.findAll(pageable);
-		return list.map(x -> new ProductDTO(x));
+	public Page<ProductProjection> findAllPaged(String name, String categoryId, Pageable pageable) {
+		List<Long> categoryIds = Arrays.asList();
+		if(!"0".equals(categoryId)) {
+			String[] vet = categoryId.split(",");
+			List<String> list = Arrays.asList(vet);
+			categoryIds = list.stream().map(x -> Long.parseLong(x)).toList();
+		}
+		return repository.searchProducts(categoryIds, name, pageable);
 	}
 
 	@Transactional(readOnly = true)
