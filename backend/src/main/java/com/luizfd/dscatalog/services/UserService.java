@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.luizfd.dscatalog.dto.UserInsertDTO;
-import com.luizfd.dscatalog.dto.UserUpdateDTO;
-import com.luizfd.dscatalog.projections.UserDetailsProjection;
 import com.luizfd.dscatalog.dto.RoleDTO;
 import com.luizfd.dscatalog.dto.UserDTO;
+import com.luizfd.dscatalog.dto.UserInsertDTO;
+import com.luizfd.dscatalog.dto.UserUpdateDTO;
 import com.luizfd.dscatalog.entities.Role;
 import com.luizfd.dscatalog.entities.User;
+import com.luizfd.dscatalog.projections.UserDetailsProjection;
 import com.luizfd.dscatalog.repositories.RoleRepository;
 import com.luizfd.dscatalog.repositories.UserRepository;
 import com.luizfd.dscatalog.services.exceptions.DatabaseException;
